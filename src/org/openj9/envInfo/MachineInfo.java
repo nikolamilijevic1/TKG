@@ -105,7 +105,7 @@ public class MachineInfo {
 			/*Process proc = Runtime.getRuntime().exec(commands);
 			BufferedReader stdOutput = new BufferedReader(new InputStreamReader(proc.getInputStream()));*/
 
-			ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "cd \"C:\\Program Files\\Microsoft SQL Server\" && dir");
+			ProcessBuilder builder = new ProcessBuilder(commands);
         	builder.redirectErrorStream(true);
        	 	Process p = builder.start();
         	BufferedReader stdOutput = new BufferedReader(new InputStreamReader(p.getInputStream()));
