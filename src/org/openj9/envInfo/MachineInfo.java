@@ -102,8 +102,16 @@ public class MachineInfo {
 	private String execCommands(String[] commands) {
 		String rt = null;
 		try {
-			Process proc = Runtime.getRuntime().exec(commands);
-			BufferedReader stdOutput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			/*Process proc = Runtime.getRuntime().exec(commands);
+			BufferedReader stdOutput = new BufferedReader(new InputStreamReader(proc.getInputStream()));*/
+
+			ProcessBuilder processBuilder = new ProcessBuilder(commands);
+			processBuilder.directory(new File("/home/"));
+			Process process = processBuilder.start();
+			BufferedReader stdOutput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			int exitCode = process.exitValue();
+			process.destroy();
+
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			String newline = "";  
@@ -112,7 +120,7 @@ public class MachineInfo {
 				newline = "\n";
 			}
 			rt = sb.toString();
-			proc.waitFor();
+			process.waitFor();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			return "Command could not be executed";
