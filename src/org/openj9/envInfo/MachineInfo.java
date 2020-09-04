@@ -105,12 +105,10 @@ public class MachineInfo {
 			/*Process proc = Runtime.getRuntime().exec(commands);
 			BufferedReader stdOutput = new BufferedReader(new InputStreamReader(proc.getInputStream()));*/
 
-			ProcessBuilder processBuilder = new ProcessBuilder(commands);
-			processBuilder.directory(new File("/home/"));
-			Process process = processBuilder.start();
-			BufferedReader stdOutput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			int exitCode = process.exitValue();
-			process.destroy();
+			ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "cd \"C:\\Program Files\\Microsoft SQL Server\" && dir");
+        	builder.redirectErrorStream(true);
+       	 	Process p = builder.start();
+        	BufferedReader stdOutput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
 			StringBuilder sb = new StringBuilder();
 			String line = null;
@@ -120,7 +118,7 @@ public class MachineInfo {
 				newline = "\n";
 			}
 			rt = sb.toString();
-			process.waitFor();
+			p.waitFor();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			return "Command could not be executed";
