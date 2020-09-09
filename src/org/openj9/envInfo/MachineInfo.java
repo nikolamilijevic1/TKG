@@ -101,12 +101,10 @@ public class MachineInfo {
 
 	private String execCommands(String[] commands) {
 		String rt = null;
+		ProcessBuilder builder = new ProcessBuilder(commands);
 		try {
 			/*Process proc = Runtime.getRuntime().exec(commands);
 			BufferedReader stdOutput = new BufferedReader(new InputStreamReader(proc.getInputStream()));*/
-
-			ProcessBuilder builder = new ProcessBuilder(commands);
-        	builder.redirectErrorStream(true);
        	 	Process p = builder.start();
         	BufferedReader stdOutput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
